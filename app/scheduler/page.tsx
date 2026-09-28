@@ -1033,14 +1033,34 @@ async function loadScheduledVideos() {
         </>
       )}
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="video/*"
-        multiple
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-      />
+      <footer
+  style={{
+    marginTop: "64px",
+    padding: "24px 0 40px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "24px",
+    fontSize: "14px",
+  }}
+>
+  <a href="/privacy">
+    Privacy Policy
+  </a>
+
+  <a href="/terms">
+    Terms of Service
+  </a>
+</footer>
+
+<input
+  ref={fileInputRef}
+  type="file"
+  accept="video/*"
+  multiple
+  onChange={handleFileChange}
+  style={{ display: "none" }}
+/>
+
     </main>
   );
 }
