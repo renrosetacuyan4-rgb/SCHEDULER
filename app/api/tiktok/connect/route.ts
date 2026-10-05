@@ -23,18 +23,25 @@ export async function GET() {
   const redirectUri = process.env.TIKTOK_REDIRECT_URI;
 
   if (!clientKey || !redirectUri) {
-    console.error(
-      "Missing TikTok OAuth environment variables."
-    );
+  console.error("TikTok OAuth configuration check failed.", {
+    hasClientKey: Boolean(clientKey),
+    hasRedirectUri: Boolean(redirectUri),
+    nodeEnv: process.env.NODE_ENV,
+  });
 
-    return NextResponse.json(
-      {
-        success: false,
-        error: "TikTok OAuth is not configured.",
+  return NextResponse.json(
+    {
+      success: false,
+      error: "TikTok OAuth is not configured.",
+      diagnostics: {
+        hasClientKey: Boolean(clientKey),
+        hasRedirectUri: Boolean(redirectUri),
+        nodeEnv: process.env.NODE_ENV,
       },
-      { status: 500 }
-    );
-  }
+    },
+    { status: 500 }
+  );
+}
 
   // Generate a cryptographically random OAuth state value.
   const state = crypto.randomBytes(32).toString("hex");
