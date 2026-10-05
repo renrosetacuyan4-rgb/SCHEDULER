@@ -41,6 +41,30 @@ const [savedSchedules, setSavedSchedules] = useState<
   const [scheduleConfirmed, setScheduleConfirmed] = useState(false);
 const schedulingLockRef = useRef(false);
 const [isScheduling, setIsScheduling] = useState(false);
+const [tiktokStatus, setTiktokStatus] =
+  useState<string | null>(null);
+
+useEffect(() => {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const status = params.get("tiktok");
+
+  if (!status) {
+    return;
+  }
+
+  setTiktokStatus(status);
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
+}, []);
+
+
 useEffect(() => {
   loadScheduledVideos();
 }, []);
@@ -488,6 +512,18 @@ async function loadScheduledVideos() {
 
   return (
     <main className="scheduler-page">
+      {tiktokStatus === "connected" && (
+  <div className="mb-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-800">
+    TikTok connected successfully.
+  </div>
+)}
+
+{tiktokStatus && tiktokStatus !== "connected" && (
+  <div className="mb-6 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800">
+    TikTok connection could not be completed. Please try again.
+  </div>
+)}
+
 
       {/* =====================================
           FIRST SCREEN — UPLOAD

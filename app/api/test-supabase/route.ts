@@ -1,18 +1,25 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
-  const { data, error } = await supabase.auth.getSession();
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.getClaims();
 
   if (error) {
     return Response.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error.message,
+      },
       { status: 500 }
     );
   }
 
+  const userId = data?.claims?.sub ?? null;
+
   return Response.json({
     success: true,
-    message: "Supabase connection works!",
-    session: data.session,
+    authenticated: !!userId,
+    userId,
   });
 }
