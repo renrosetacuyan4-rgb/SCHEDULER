@@ -75,6 +75,9 @@ export async function GET() {
     state
   );
 
+  authorizeUrl.searchParams.set("disable_auto_auth", "1");
+
+
   const response = NextResponse.redirect(
     authorizeUrl.toString()
   );
