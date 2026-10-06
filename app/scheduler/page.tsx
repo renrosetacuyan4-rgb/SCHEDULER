@@ -657,21 +657,27 @@ async function loadScheduledVideos() {
                 Choose where you want your content to go.
               </p>
 
-              <div className="platform-card selected">
-                <div>
-                  <strong>
-                    TikTok
-                  </strong>
+              <button
+  className="platform-card selected"
+  type="button"
+  onClick={() => {
+    window.location.href = "/api/tiktok/connect";
+  }}
+>
+  <div>
+    <strong>
+      TikTok
+    </strong>
 
-                  <span>
-                    Ready to schedule
-                  </span>
-                </div>
+    <span>
+      Connect your TikTok account
+    </span>
+  </div>
 
-                <div className="platform-check">
-                  ✓
-                </div>
-              </div>
+  <div className="platform-check">
+    ✓
+  </div>
+</button>
 
               <button
                 className="continue-button"
