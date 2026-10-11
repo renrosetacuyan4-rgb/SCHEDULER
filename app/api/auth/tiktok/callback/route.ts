@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -165,8 +166,10 @@ export async function GET(request: Request) {
       : null;
 
   // 7. Store the tokens server-side in Supabase.
-  const { error: databaseError } = await supabase
-    .from("tiktok_connections")
+ const adminSupabase = createAdminClient();
+
+const { error: databaseError } = await adminSupabase
+  .from("tiktok_connections")
     .upsert(
       {
         user_id: user.id,
